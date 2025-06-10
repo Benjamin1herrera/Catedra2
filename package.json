@@ -1,0 +1,24 @@
+{
+  "name": "catedra2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch src/app.js "
+  },
+  "keywords": [],
+  "author": "Benjamin1herrera",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "Repositorio de mi segunda catedra de desarrollo de soluciones moviles",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}
