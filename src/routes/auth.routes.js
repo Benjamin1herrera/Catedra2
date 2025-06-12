@@ -1,12 +1,12 @@
 const {Router} = require('express');
 
-const {register} = require('../controllers/auth.controller');
+const {registro, iniciarSesion} = require('../controllers/auth.controller');
 
 const router = Router();
 
-//router.post('/login', login);
+router.post('/login', iniciarSesion);
 
-router.post('/register', register);
+router.post('/register', registro);
 
 //router.get('/verify-token', verifyToken);
 

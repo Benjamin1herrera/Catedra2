@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const generateJWT = require('../utils/generateJWT');
 const jwt = require('jsonwebtoken');
 
-const register = async (req = request, res = response) => {
+const registro = async (req = request, res = response) => {
     try {
         const { nombre, apellido, email, contrasenia } = req.body;
         
@@ -42,9 +42,8 @@ const register = async (req = request, res = response) => {
 
         return res.status(201).json({
             success: true,
-            error: false,
+            data: datosUsuarios,
             msg: 'Usuario registrado correctamente',
-            usuarios: datosUsuarios
         });
         
     } catch (error) {
@@ -56,4 +55,52 @@ const register = async (req = request, res = response) => {
     }
 }
 
-module.exports = {register}
+const iniciarSesion = async (req = request, res = response) => {
+    try {
+        const {email, contrasenia} = req.body;
+
+        const usuarios = await Usuarios.findOne({ where: { email } });
+
+        if (!usuarios) {
+            return res.status(400).json({
+                success: false,
+                error: true,
+                msg: 'credencia incorrectas'
+            });
+        }
+        const validPassword = bcrypt.compareSync(contrasenia, usuarios.contrasenia);
+
+        if (!validPassword) {
+            return res.status(400).json({
+                success: false,
+                error: true,
+                msg: 'credencia incorrectas'
+            });
+        }
+
+        const token = await generateJWT(usuarios.id);
+
+        const {nombre, apellido, email: emailUsuario, } = usuarios;
+
+        const datosUsuarios = {nombre, apellido, email: emailUsuario};
+
+        return res.status(200).json({
+            success: true,
+            data: datosUsuarios,
+            msg: 'Usuario logueado correctamente',
+        });
+
+    }catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: true,
+            msg: 'Error al iniciar sesión'
+        });
+    }
+};
+
+
+module.exports = {
+    registro,
+    iniciarSesion
+}
