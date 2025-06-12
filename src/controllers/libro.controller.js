@@ -66,7 +66,37 @@ const listarLibros = async (req = request, res = response) => {
     }
 };
 
+const obtenerLibroporId = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
+
+        const libro = await Libros.findByPk(id);
+
+        if (!libro) {
+            return res.status(404).json({
+                success: false,
+                error: true,
+                msg: 'Libro no encontrado'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: libro,
+            msg: 'Libro encontrado'
+        });
+    } catch (error) {
+        console.error('Error en getLibroPorId:', error);
+        return res.status(500).json({
+            success: false,
+            error: true,
+            msg: 'Error al obtener el libro'
+        });
+    }
+};
+
 module.exports = {
     agregarLibro,
-    listarLibros
+    listarLibros,
+    obtenerLibroporId
 };
