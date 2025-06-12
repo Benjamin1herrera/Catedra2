@@ -47,6 +47,26 @@ const agregarLibro = async (req = request, res = response) => {
     };
 }
 
+const listarLibros = async (req = request, res = response) => {
+    try {
+        const libros = await Libros.findAll();
+
+        return res.status(200).json({
+            success: true,
+            data: libros,
+            msg: 'Listado de libros'
+        });
+    } catch (error) {
+        console.error('Error en getLibros:', error);
+        return res.status(500).json({
+            success: false,
+            error: true,
+            msg: 'Error al obtener los libros'
+        });
+    }
+};
+
 module.exports = {
-    agregarLibro
+    agregarLibro,
+    listarLibros
 };
