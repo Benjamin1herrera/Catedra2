@@ -7,6 +7,7 @@ class Usuarios extends Model {
     static apellido;
     static email;
     static contrasenia;
+    static token;
 }
 
 Usuarios.init(

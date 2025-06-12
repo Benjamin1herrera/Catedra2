@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const db = require('./config/database');
 const Usuarios = require('./models/Usuarios');
+const Libros = require('./models/Libros');
+const Prestamos = require('./models/Prestamos');
 
 class Server {
     constructor () {
@@ -31,6 +33,8 @@ class Server {
     async dbConnection() {
         await db.authenticate()
         await Usuarios.sync({force: false});
+        await Libros.sync({force: false});
+        await Prestamos.sync({force: false});
         console.log('Base de datos conectada correctamente');
     }
 

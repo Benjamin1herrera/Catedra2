@@ -1,23 +1,15 @@
-{
+module.exports = {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "database": "Catedra2",
+    "dialect": "sqlite",
+    "storage": "./Catedra2.sqlite"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "database": "Catedra2_test",
+    "dialect": "sqlite"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "database": "Catedra2_production",
+    "dialect": "sqlite"
   }
 }

@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node --trace-warnings --watch --env-file=env/.env src/app.js "
+    "dev": "node --trace-warnings --watch --env-file=env/.env src/app.js ",
+    "db:migrate:up": "npx sequelize-cli db:migrate",
+    "db:migrate:down": "npx sequelize-cli db:migrate:undo",
+    "db:seed": "npx sequelize-cli db:seed:all"
   },
   "keywords": [],
   "author": "Benjamin1herrera",
@@ -11,6 +14,7 @@
   "type": "commonjs",
   "description": "Repositorio de mi segunda catedra de desarrollo de soluciones moviles",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
