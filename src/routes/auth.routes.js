@@ -1,6 +1,8 @@
 const {Router} = require('express');
 
-const {registro, iniciarSesion} = require('../controllers/auth.controller');
+const {registro, iniciarSesion, verInformacion} = require('../controllers/auth.controller');
+
+const validateJWT = require('../middlewares/validateJWT');
 
 const router = Router();
 
@@ -8,6 +10,6 @@ router.post('/login', iniciarSesion);
 
 router.post('/register', registro);
 
-//router.get('/verify-token', verifyToken);
+router.get('/me', validateJWT, verInformacion);
 
 module.exports = router;

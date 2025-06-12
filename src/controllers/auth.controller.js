@@ -1,7 +1,5 @@
 const { response, request } = require('express');
 const Usuarios = require('../models/Usuarios');
-const Libros = require('../models/Libros');
-const Prestamos = require('../models/Prestamos');
 const bcrypt = require('bcryptjs');
 const generateJWT = require('../utils/generateJWT');
 const jwt = require('jsonwebtoken');
@@ -82,7 +80,7 @@ const iniciarSesion = async (req = request, res = response) => {
 
         const {nombre, apellido, email: emailUsuario, } = usuarios;
 
-        const datosUsuarios = {nombre, apellido, email: emailUsuario};
+        const datosUsuarios = {nombre, apellido, email: emailUsuario, token};
 
         return res.status(200).json({
             success: true,
@@ -99,8 +97,28 @@ const iniciarSesion = async (req = request, res = response) => {
     }
 };
 
+const verInformacion = async (req, res) => {
+    try{
+        const {usuarios} = req;
+
+        const {contrasenia, ...datosUsuarios} = usuarios.toJSON();
+
+        return res.status(200).json({
+            success: true,
+            data: datosUsuarios,
+        });
+
+    }catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: true,
+            msg: 'Error del servidor'
+        });
+    }
+}
 
 module.exports = {
     registro,
-    iniciarSesion
+    iniciarSesion,
+    verInformacion
 }

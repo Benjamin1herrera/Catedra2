@@ -5,7 +5,7 @@ const { token } = require('morgan');
 
 const validateJWT = async (req, res = response, next) => {
     const authHeader = req.header('Authorization');
-    token = authHeader && authHeader.split(' ')[1];
+    const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) {
         return res.status(401).json({
