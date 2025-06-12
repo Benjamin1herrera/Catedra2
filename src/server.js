@@ -1,11 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const db = require('./config/database');
+const Usuarios = require('./models/Usuarios');
 
 class Server {
     constructor () {
         this.app = express();
-        this.port = 8080;
+        this.port = process.env.PORT;
         this.server = require('http').createServer(this.app);
 
         // Camino
@@ -27,6 +29,9 @@ class Server {
     }
 
     async dbConnection() {
+        await db.authenticate()
+        await Usuarios.sync({force: false});
+        console.log('Base de datos conectada correctamente');
     }
 
     middlewares() {
@@ -49,7 +54,7 @@ class Server {
 
     listen() {
         this.app.listen(this.port, () => {
-            console.log(`Servidor corriendo en el puerto: http://localhost:${this.port}`);
+            console.log(`Servidor corriendo en el puerto: http://localhost:${this.port}, ${process.env.DB_NAME}`);
         });
     }
 }
