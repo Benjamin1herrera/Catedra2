@@ -167,12 +167,50 @@ const eliminarLibro = async (req = request, res = response) => {
     }
 };
 
+const reintegrarLibro = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
 
+        const libro = await Libros.findByPk(id);
+
+        if (!libro) {
+            return res.status(404).json({
+                success: false,
+                error: true,
+                msg: 'Libro no encontrado'
+            });
+        }
+
+        if (!libro.eliminado) {
+            return res.status(400).json({
+                success: false,
+                error: true,
+                msg: 'El libro ya está activo'
+            });
+        }
+
+        await libro.update({ eliminado: false });
+
+        return res.status(200).json({
+            success: true,
+            msg: 'Libro restaurado correctamente'
+        });
+
+    } catch (error) {
+        console.error('Error en restaurarLibro:', error);
+        return res.status(500).json({
+            success: false,
+            error: true,
+            msg: 'Error al restaurar el libro'
+        });
+    }
+};
 
 module.exports = {
     agregarLibro,
     listarLibros,
     obtenerLibroporId,
     editarLibro,
-    eliminarLibro
+    eliminarLibro,
+    reintegrarLibro
 };
