@@ -14,7 +14,7 @@ class Server {
 
         // Camino
         this.paths = {
-        users: "/api/users",
+            auth: '/api/',
         };
 
         // Conexión a la base de datos
@@ -53,7 +53,7 @@ class Server {
     routes() {
 
         // Caminos de ruta
-        this.app.use(this.paths.users, require('./routes/userRouter'));
+        this.app.use(this.paths.auth, require('./routes/auth.routes'));
     }
 
     listen() {
