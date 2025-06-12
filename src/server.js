@@ -55,6 +55,7 @@ class Server {
         // Caminos de ruta
         this.app.use(this.paths.auth, require('./routes/auth.routes'));
         this.app.use(this.paths.auth, require('./routes/libros.routes'));
+        this.app.use(this.paths.auth, require('./routes/prestamos.routes'));
     }
 
     listen() {

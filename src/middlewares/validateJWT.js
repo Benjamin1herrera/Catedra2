@@ -1,7 +1,6 @@
-const {response} = require('express');
+const { response } = require('express');
 const jwt = require('jsonwebtoken');
 const Usuarios = require('../models/Usuarios');
-const { token } = require('morgan');
 
 const validateJWT = async (req, res = response, next) => {
     const authHeader = req.header('Authorization');
@@ -15,26 +14,28 @@ const validateJWT = async (req, res = response, next) => {
         });
     }
 
-    const {id} = jwt.verify(token, process.env.JWT_SECRET);
+    try {
+        const { id } = jwt.verify(token, process.env.JWT_SECRET);
 
-    const usuarios = await Usuarios.findByPk(id);
+        const usuarios = await Usuarios.findByPk(id);
 
-    req.usuarios = usuarios;
-    next();
+        req.usuarios = usuarios;
+        next();
+    } catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({
+                success: false,
+                error: true,
+                msg: 'Token expirado'
+            });
+        }
 
-    if(error.name === 'TokenexpiredError') {
         return res.status(401).json({
             success: false,
             error: true,
-            msg: 'Token expirado'
+            msg: 'Token no válido'
         });
     }
-
-    return res.status(401).json({
-        success: false,
-        error: true,
-        msg: 'Token no válido'
-    });
-}
+};
 
 module.exports = validateJWT;
